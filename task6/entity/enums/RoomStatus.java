@@ -1,6 +1,8 @@
 package task6.entity.enums;
 
-public enum RoomStatus {
+import java.io.Serializable;
+
+public enum RoomStatus implements Serializable {
     AVAILABLE,
     OCCUPIED,
     UNDER_MAINTENANCE

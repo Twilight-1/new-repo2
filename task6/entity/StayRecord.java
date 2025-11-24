@@ -1,15 +1,18 @@
 package task6.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class StayRecord {
-    private String id;
-    private String guestId;
+public class StayRecord implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private long id;
+    private long guestId;
     private LocalDate checkInDate;
-    private LocalDate checkOutDate; // computed from duration
+    private LocalDate checkOutDate;
     private int durationDays;
 
-    public StayRecord(String id, String guestId, LocalDate checkInDate, int durationDays) {
+    public StayRecord(long id, long guestId, LocalDate checkInDate, int durationDays) {
         this.id = id;
         this.guestId = guestId;
         this.checkInDate = checkInDate;
@@ -17,11 +20,10 @@ public class StayRecord {
         this.checkOutDate = checkInDate.plusDays(durationDays);
     }
 
-    public String getId() { return id; }
-    public String getGuestId() { return guestId; }
+    public long getId() { return id; }
+    public long getGuestId() { return guestId; }
     public LocalDate getCheckInDate() { return checkInDate; }
     public LocalDate getCheckOutDate() { return checkOutDate; }
     public int getDurationDays() { return durationDays; }
-
-    public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
+    public void setCheckOutDate(LocalDate d) { this.checkOutDate = d; }
 }

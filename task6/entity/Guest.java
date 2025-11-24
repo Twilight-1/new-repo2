@@ -1,16 +1,21 @@
 package task6.entity;
 
-public class Guest {
-    private String id;
+import java.io.Serializable;
+
+public class Guest implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private long id; // 0 => not assigned
     private String name;
 
-    public Guest(String id, String name) {
+    public Guest(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getId() { return id; }
-    public String getName() { return name; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
+    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 }
