@@ -4,28 +4,33 @@ import task6.entity.ServiceUsage;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ServiceUsageService {
-    private final Map<String, ServiceUsage> usages = new LinkedHashMap<>();
+    private final Map<Long, ServiceUsage> store = new LinkedHashMap<>();
+    private final AtomicLong idGen = new AtomicLong(1);
 
-    public ServiceUsage addUsage(ServiceUsage u) {
-        usages.put(u.getId(), u);
-        return u;
+    public void setNextId(long next) { idGen.set(next); }
+
+    public ServiceUsage addOrUpdate(ServiceUsage u) {
+        if (u == null) throw new IllegalArgumentException("Usage is null");
+        if (u.getId() <= 0) {
+            long id = idGen.getAndIncrement();
+            ServiceUsage nu = new ServiceUsage(id, u.getGuestId(), u.getServiceId(), u.getDate());
+            store.put(id, nu);
+            return nu;
+        } else {
+            store.put(u.getId(), u);
+            return u;
+        }
     }
 
-    // used by ImportExportService to add already-created usage objects
-    public void addUsageDirect(ServiceUsage u) { addUsage(u); }
-
-    public ServiceUsage addUsage(String id, String guestId, String serviceId, java.time.LocalDate date) {
-        ServiceUsage u = new ServiceUsage(id, guestId, serviceId, date);
-        usages.put(id, u);
-        return u;
+    public List<ServiceUsage> getForGuest(long guestId) {
+        return store.values().stream().filter(u -> u.getGuestId() == guestId).collect(Collectors.toList());
     }
 
-    public List<ServiceUsage> getAll() { return new ArrayList<>(usages.values()); }
-
-    public List<ServiceUsage> getForGuest(String guestId) {
-        return usages.values().stream().filter(u -> u.getGuestId().equals(guestId)).collect(Collectors.toList());
-    }
+    public List<ServiceUsage> getAll() { return new ArrayList<>(store.values()); }
+    public void clearAll() { store.clear(); }
+    public long nextId() { return idGen.get(); }
 }
 

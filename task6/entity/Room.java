@@ -1,20 +1,23 @@
 package task6.entity;
 
 import task6.entity.enums.RoomStatus;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
-    private String id;
+public class Room implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private long id;
     private int number;
     private double price;
     private int capacity;
     private int stars;
     private RoomStatus status;
-    private String currentGuestId; // nullable
-    private List<StayRecord> history = new ArrayList<>();
+    private Long currentGuestId; // nullable
+    private final List<StayRecord> history = new ArrayList<>();
 
-    public Room(String id, int number, double price, int capacity, int stars, RoomStatus status) {
+    public Room(long id, int number, double price, int capacity, int stars, RoomStatus status) {
         this.id = id;
         this.number = number;
         this.price = price;
@@ -23,16 +26,18 @@ public class Room {
         this.status = status;
     }
 
-    public String getId() { return id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
     public int getNumber() { return number; }
     public double getPrice() { return price; }
     public int getCapacity() { return capacity; }
     public int getStars() { return stars; }
     public RoomStatus getStatus() { return status; }
-    public String getCurrentGuestId() { return currentGuestId; }
-    public List<StayRecord> getHistory() { return history; }
-
     public void setPrice(double price) { this.price = price; }
     public void setStatus(RoomStatus status) { this.status = status; }
-    public void setCurrentGuestId(String guestId) { this.currentGuestId = guestId; }
+
+    public Long getCurrentGuestId() { return currentGuestId; }
+    public void setCurrentGuestId(Long currentGuestId) { this.currentGuestId = currentGuestId; }
+
+    public List<StayRecord> getHistory() { return history; }
 }

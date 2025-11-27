@@ -14,25 +14,19 @@ public class GuestController {
     private final GuestBuilder builder;
     private final ConsoleView view;
 
-    public GuestController(GuestService guestService, RoomService roomService, GuestBuilder builder, ConsoleView view) {
-        this.guestService = guestService;
-        this.roomService = roomService;
-        this.builder = builder;
-        this.view = view;
+    public GuestController(GuestService gs, RoomService rs, GuestBuilder b, ConsoleView v) {
+        this.guestService = gs; this.roomService = rs; this.builder = b; this.view = v;
     }
 
-    public void addGuestFromConsole() {
+    public void addGuest() {
         Guest g = builder.buildFromConsole();
         guestService.addOrUpdate(g);
-        view.print("Guest added: " + g.getName());
+        view.print("Guest added: " + g.getName() + " (id:" + g.getId() + ")");
     }
 
-    public void showGuests(String sortBy) {
-        List<Guest> guests = guestService.getAll();
-        if ("name".equalsIgnoreCase(sortBy)) {
-            guests.sort((a,b)->a.getName().compareToIgnoreCase(b.getName()));
-        }
-        view.printGuestsWithRooms(guests, roomService);
+    public void listGuests(String sortBy) {
+        List<Guest> all = guestService.getAll();
+        if ("name".equalsIgnoreCase(sortBy)) all.sort((a,b)->a.getName().compareToIgnoreCase(b.getName()));
+        view.printGuestsWithRooms(all, roomService);
     }
 }
-

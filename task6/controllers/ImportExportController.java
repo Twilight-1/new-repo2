@@ -7,65 +7,57 @@ import java.io.File;
 
 
 public class ImportExportController {
-    private final ImportExportService ieService;
+    private final ImportExportService ie;
     private final ServiceUsageService usageService;
     private final ConsoleView view;
 
-    public ImportExportController(ImportExportService ieService, ServiceUsageService usageService, ConsoleView view) {
-        this.ieService = ieService;
-        this.usageService = usageService;
-        this.view = view;
+    public ImportExportController(ImportExportService ie, ServiceUsageService us, ConsoleView v) {
+        this.ie = ie; this.usageService = us; this.view = v;
     }
 
     public void exportGuests(String path) {
-        ieService.exportGuests(new File(path));
-        view.print("Guests exported to " + path);
+        ie.exportGuests(new File(path));
+        view.print("Exported guests");
     }
-
     public void importGuests(String path) {
-        ieService.importGuests(new File(path));
-        view.print("Guests imported from " + path);
+        ie.importGuests(new File(path));
+        view.print("Imported guests");
     }
 
     public void exportServices(String path) {
-        ieService.exportServices(new File(path));
-        view.print("Services exported to " + path);
+        ie.exportServices(new File(path));
+        view.print("Exported services");
     }
-
     public void importServices(String path) {
-        ieService.importServices(new File(path));
-        view.print("Services imported from " + path);
+        ie.importServices(new File(path));
+        view.print("Imported services");
     }
 
     public void exportRooms(String path) {
-        ieService.exportRooms(new File(path));
-        view.print("Rooms exported to " + path);
+        ie.exportRooms(new File(path));
+        view.print("Exported rooms");
     }
-
     public void importRooms(String path) {
-        ieService.importRooms(new File(path));
-        view.print("Rooms imported from " + path);
+        ie.importRooms(new File(path));
+        view.print("Imported rooms");
     }
 
     public void exportStayRecords(String path) {
-        ieService.exportStayRecords(new File(path));
-        view.print("StayRecords exported to " + path);
+        ie.exportStayRecords(new File(path));
+        view.print("Exported stay records");
     }
-
     public void importStayRecords(String path) {
-        ieService.importStayRecords(new File(path));
-        view.print("StayRecords imported from " + path);
+        ie.importStayRecords(new File(path));
+        view.print("Imported stay records");
     }
 
     public void exportUsages(String path) {
-        ieService.exportUsages(new File(path), usageService);
-        view.print("Service usages exported to " + path);
+        ie.exportUsages(new File(path));
+        view.print("Exported usages");
     }
-
     public void importUsages(String path) {
-        ieService.importUsages(new File(path), usageService);
-        view.print("Service usages imported from " + path);
+        ie.importUsages(new File(path));
+        view.print("Imported usages");
     }
 }
-
 
